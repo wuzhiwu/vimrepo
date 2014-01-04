@@ -126,21 +126,67 @@ syntax enable
 syntax on
 colorscheme desert
 
+map <C-F12> :!ctags -R --fields=+ailS --extra=+q .<CR>
 set autochdir
 set tags=tags;
 set tags+=/home/wuzhw/openvswitch-1.10.0/tags
 set tags+=/home/wuzhw/xen-4.3.0/tags
-set tags+=/home/wuzhw/protobuf/protobuf-rpc/protobuf-socket-rpc-read-only/java/src/main/java/com/googlecode/protobuf/socketrpc/tags
-set tags+=/home/wuzhw/protobuf/protobuf-2.5.0/java/src/main/java/com/google/protobuf/tags
-set tags+=/home/wuzhw/protobuf/protobuf-rpc/protobuf-socket-rpc-read-only/python/src/protobuf/socketrpc/tags
-set tags+=/home/wuzhw/linux-3.10.20/tags
-set tags+=//usr/lib/python2.6/site-packages/tags
+set tags+=/home/wuzhw/protobuf/tags
+set tags+=/home/wuzhw/learning/linux-3.10.20/tags
+set tags+=/usr/lib/python2.6/site-packages/tags
 
-" cscope
 
 " set vim status line
-set statusline=%F%m%r%h%w/[FORMAT=%{&ff}]/[TYPE=%Y]/[ASCII=/%03.3b]/[HEX=/%02.2B]/[POS=%04l,%04v][%p%%]/[LEN=%L]
-" set laststatus=1
+" set statusline=%f%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[ASCII=/%03.3b]\[HEX=/%02.2B]\[POS=%04l,%04v][%p%%]\[LEN=%L]
+set statusline=%f%m%r%h%w
+" if laststatus=1 : always show statusline
+" if laststatus=2 : always show statusline
+set laststatus=1        
+
+" cscope
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+if has("cscope")
+    set cscopetag
+    set csto=0
+    if filereadable("cscope.out")
+        cs add cscope.out  
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set cscopeverbose  
+
+    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>	
+    " nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>	
+    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>	
+
+    nmap <C-@>s :scs find s <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-@>g :scs find g <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-@>c :scs find c <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-@>t :scs find t <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-@>e :scs find e <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-@>f :scs find f <C-R>=expand("<cfile>")<CR><CR>	
+    nmap <C-@>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>	
+    nmap <C-@>d :scs find d <C-R>=expand("<cword>")<CR><CR>	
+
+
+    nmap <C-@><C-@>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>	
+    nmap <C-@><C-@>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>	
+    nmap <C-@><C-@>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+
+    "set timeoutlen=4000
+    "set ttimeout 
+    "set ttimeoutlen=100
+    cs add /home/wuzhw/protobuf/cscope.out /home/wuzhw/protobuf 
+endif
 
 " taglist setting
 nnoremap <silent><F11> :TlistToggle<CR>
@@ -200,7 +246,7 @@ nmap <F5> :cw<cr>
 nmap <F6> :cn<cr>
 nmap <F7> :cp<cr>
 
-
+" auto indent
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#A4E57E'
