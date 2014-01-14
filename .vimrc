@@ -50,6 +50,8 @@ set linebreak
 set showbreak=""
 set breakat=" ^I!@*-+;:,./?！，。"
 set expandtab " expand tab to spaces
+
+map <F2> :nohl<CR>
 " set noexpandtab
 " use :retab to transfer existing tab to spaces
 
