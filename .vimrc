@@ -50,7 +50,8 @@ set linebreak
 set showbreak=""
 set breakat=" ^I!@*-+;:,./?！，。"
 set expandtab " expand tab to spaces
-
+set textwidth=80
+set colorcolumn=+1,+2
 map <F2> :nohl<CR>
 " set noexpandtab
 " use :retab to transfer existing tab to spaces
@@ -131,12 +132,6 @@ colorscheme desert
 map <C-F12> :!ctags -R --fields=+ailS --extra=+q .<CR>
 set autochdir
 set tags=tags;
-set tags+=/home/wuzhw/openvswitch-1.10.0/tags
-set tags+=/home/wuzhw/xen-4.3.0/tags
-set tags+=/home/wuzhw/protobuf/tags
-set tags+=/home/wuzhw/learning/linux-3.10.20/tags
-set tags+=/usr/lib/python2.6/site-packages/tags
-
 
 " set vim status line
 " set statusline=%f%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[ASCII=/%03.3b]\[HEX=/%02.2B]\[POS=%04l,%04v][%p%%]\[LEN=%L]
@@ -187,7 +182,6 @@ if has("cscope")
     "set timeoutlen=4000
     "set ttimeout 
     "set ttimeoutlen=100
-    cs add /home/wuzhw/protobuf/cscope.out /home/wuzhw/protobuf 
 endif
 
 " taglist setting
