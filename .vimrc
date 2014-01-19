@@ -79,7 +79,7 @@ set linebreak
 set showbreak=""
 set breakat=" ^I!@*-+;:,./?！，。"
 set textwidth=80
-set colorcolumn=+1,+2
+set colorcolumn=+1
 map <F2> :nohl<CR>
 map Q gq
 					" Don't use Ex mode, use Q for formatting
@@ -297,6 +297,10 @@ let Tlist_Use_SingleClick = 1
 "-----------------------------------------------------------------------------
 " plugin - omnicpp.vim
 "-----------------------------------------------------------------------------
+" supertab setting
+let g:SuperTabRetainCompletionType=2
+let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+let g:SuperTabClosePreviewOnPopupClose=1
 set nocp
 let OmniCpp_GlobalScopeSearch = 1
 let OmniCpp_NamespaceSearch = 1
@@ -311,6 +315,10 @@ let OmniCpp_SelectFirstItem = 0
 let OmniCpp_DefaultNamespaces   = ["std", "_GLIBCXX_STD"]
 highlight Pmenu guibg=darkgrey guifg=black
 highlight PmenuSel guibg=lightgrey guifg=black
+" set ofu=syntaxcomplete
+" autocmd FileType python　set
+" omnifunc=pythoncomplete
+" autocmd FileType python runtime! autoload/pythoncomplete.vim
 
 "-----------------------------------------------------------------------------
 " plugin - python related
@@ -329,10 +337,6 @@ autocmd FileType python setlocal foldmethod=indent
 " unfold all codes defaultly
 set foldlevel=99
 
-" supertab setting
-let g:SuperTabRetainCompletionType=2
-let g:SuperTabDefaultCompletionType="<C-X><C-O>"
-let g:SuperTabClosePreviewOnPopupClose=1
 
 " quickfix setting
 nmap <F5> :cw<cr>
@@ -471,3 +475,7 @@ let g:winManagerWindowLayout = 'TodoList'
 
 let g:tskelDir = $VIMFILES."/skeletons"
 
+let g:miniBufExplMapWindowNavVim=1
+let g:miniBufExplMapWindowNavArrows=1
+let g:miniBufExplMapCTabSwitchBufs=1
+let g:miniBufExplModSelTarget=1
