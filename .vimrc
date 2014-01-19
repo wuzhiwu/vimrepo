@@ -32,13 +32,13 @@ set backspace=indent,eol,start
 					" allow backspacing over everything in insert mode
 
 if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
+	set nobackup		" do not keep a backup file, use versions instead
 else
-  set backup        " make backup file and leave it around
-  set backupdir=$VIMDATA/backup  
-					" where to put backup file
-  set directory=$VIMDATA/temp    
-					" where to put swap file
+	set backup			" make backup file and leave it around
+  	set backupdir=$VIMDATA/backup  
+						" where to put backup file
+  	set directory=$VIMDATA/temp    
+						" where to put swap file
 endif
 
 "-----------------------------------------------------------------------------
@@ -206,8 +206,13 @@ endif
 "-----------------------------------------------------------------------------
 " plugin: ctags
 "-----------------------------------------------------------------------------
+if has("win32")
+  let Tlist_Ctags_Cmd = $VIMFILES.'/ctags.exe' " location of ctags tool
+else
+  let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+endif
 set autochdir
-set tags=./tags,tags,$VIMFILES/doc/tags " used by CTRL-]
+set tags=./tags,tags	",$VIMFILES/doc/tags " used by CTRL-]
 map <C-F12> :!ctags -R --fields=+ailS --extra=+q .<CR>
 
 "-----------------------------------------------------------------------------
@@ -259,11 +264,6 @@ endif
 "-----------------------------------------------------------------------------
 " plugin - taglist.vim
 "-----------------------------------------------------------------------------
-if has("win32")
-  let Tlist_Ctags_Cmd = $VIMFILES.'/ctags.exe' " location of ctags tool
-else
-  let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
-endif
 nnoremap <silent><F11> :TlistToggle<CR>
 let winManagerWindowLayout = 'FileExplorer|TagList'
 let Tlist_Show_Menu = 1
@@ -470,3 +470,4 @@ let g:winManagerWidth   = 35
 let g:winManagerWindowLayout = 'TodoList'
 
 let g:tskelDir = $VIMFILES."/skeletons"
+
