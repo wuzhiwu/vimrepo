@@ -1,7 +1,7 @@
 " An example for a vimrc file.
 "
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2011 Apr 15
+" Maintainer:	Zhiwu Wu <zhiwu_work@163.com>
+" Last change:	2014 Jan 20
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -27,18 +27,16 @@ syntax enable
 filetype on             " enable file type detection
 filetype plugin on
 
-set nocompatible    " use vim as vim, should be put at the very start
+set nocompatible		" use vim as vim, should be put at the very start
 set backspace=indent,eol,start 
-					" allow backspacing over everything in insert mode
+						" allow backspacing over everything in insert mode
 
 if has("vms")
 	set nobackup		" do not keep a backup file, use versions instead
 else
 	set backup			" make backup file and leave it around
-  	set backupdir=$VIMDATA/backup  
-						" where to put backup file
-  	set directory=$VIMDATA/temp    
-						" where to put swap file
+  	set backupdir=$VIMDATA/backup  " where to put backup file
+  	set directory=$VIMDATA/temp    " where to put swap file
 endif
 
 "-----------------------------------------------------------------------------
@@ -50,14 +48,11 @@ set viminfo+=!          " make sure it can save viminfo
 set isk+=$,%,#,-        " none of these should be word dividers
 set confirm             " raise a dialog confirm whether save changed buffer
 set ffs=unix,dos,mac    " favor unix, which behaves good under Linux/Windows
-set fenc=utf-8          " default fileencoding
-set fencs=utf-8,ucs-bom,euc-jp,gb18030,gbk,gb2312,cp936
 set runtimepath+=$VIMDATA      " add this path to rtp, support GLVS
 set path=.,/usr/include/*,,    " where gf, ^Wf, :find will search
 set makeef=error.err           " the errorfile for :make and :grep
 set history=100		" keep 50 lines of command line history
 set ruler			" show the cursor position all the time
-set showcmd			" display incomplete commands
 set showmatch
 set matchtime=5     " 1/10 second to show the matching paren
 set incsearch		" do incremental searching
@@ -74,16 +69,24 @@ set expandtab		" expand tab to spaces
 set statusline=%f%m%r%h%w
 set laststatus=1        " 2 : always show statusline
 
-set splitbelow
-set linebreak
+" set splitbelow
+" set linebreak
 set showbreak=""
 set breakat=" ^I!@*-+;:,./?！，。"
 set textwidth=80
-set colorcolumn=+1
+if version >= 703
+	set colorcolumn=+1
+endif
 map <F2> :nohl<CR>
 map Q gq
 					" Don't use Ex mode, use Q for formatting
 	
+"-----------------------------------------------------------------------------
+" Vim encoding setting
+"-----------------------------------------------------------------------------
+set fileencoding=utf-8          " default fileencoding
+set fencs=utf-8,ucs-bom,euc-jp,gb18030,gbk,gb2312,cp936
+
 " hi Comment term=bold ctermfg=3 guifg=SlateBlue
 " hi StatusLineNC ctermfg=0  ctermbg=7
 " hi StatusLine   cterm=reverse ctermfg=4  ctermbg=7
@@ -91,18 +94,22 @@ map Q gq
 "-----------------------------------------------------------------------------
 " Vim UI
 "-----------------------------------------------------------------------------
-set linespace=1         " space it out a little more (easier to read)
+" set linespace=1         " space it out a little more (easier to read)
 set wildmenu            " type :h and press <Tab> to look what happens
-set cmdheight=2         " use 2 screen lines for command-line
 set lazyredraw          " do not redraw while executing macros (much faster)
 set hid                 " allow to change buffer without saving
 set backspace=2         " make backspace work normal
 set whichwrap+=<,>,h,l  " allow backspace and cursor keys to wrap
-set mouse=a             " use mouse in all modes
 set shortmess=atI       " shorten messages to avoid 'press a key' prompt
 set report=0            " tell us when anything is changed via :...
 set fillchars=vert:\ ,stl:\ ,stlnc:\
                         " make the splitters between windows be blank
+ 
+"-----------------------------------------------------------------------------
+" visual cues
+"-----------------------------------------------------------------------------
+set cmdheight=2         " use 2 screen lines for command-line
+set showcmd			    " display incomplete commands
 
 "-----------------------------------------------------------------------------
 " visual cues
@@ -115,11 +122,10 @@ set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$ " how :set list show
 "-----------------------------------------------------------------------------
 " text formatting/layout
 "-----------------------------------------------------------------------------
-set ai                  " autoindent
-set si                  " smartindent
-set cindent             " do C-style indenting
+" set ai                  " autoindent
+" set si                  " smartindent
+" set cindent             " do C-style indenting
 set fo=tcrqn            " see help (complex)
-set noexpandtab         " real tabs please!
 set nowrap              " do not wrap lines
 set formatoptions+=mM   " thus vim can reformat multibyte text (e.g. Chinese)
 
@@ -135,11 +141,11 @@ set foldopen -=undo     " don't open folds when you undo stuff
 "-----------------------------------------------------------------------------
 " auto indent
 "-----------------------------------------------------------------------------
-let g:indentLine_enabled = 1
+" let g:indentLine_enabled = 1
+let g:indentLine_char = '¦'
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#A4E57E'
 nnoremap <leader>ig :IndentLinesToggle<CR>:set list! lcs=tab:\\|\<Space><CR>
-let g:indentLine_char = '¦'
 
 "-----------------------------------------------------------------------------
 " mouse setting
@@ -157,13 +163,13 @@ inoremap <C-U> <C-G>u<C-U>
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
   " colo inkpot         " colorscheme, inkpot.vim
-  set lines=40          " window tall and wide, only if gui_running,
-  set columns=120       " or vim under console behaves badly
+  " set lines=40          " window tall and wide, only if gui_running,
   set background=dark
-  colorscheme darkblue
+  " colorscheme darkblue
   set guifont=Bitstream\ Vera\ Sans\ Mono\ 13
 else
   colorscheme desert
+  set columns=120
 endif
 
 if has("autocmd")
@@ -178,7 +184,7 @@ if has("autocmd")
   au!
 
   " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  autocmd FileType text setlocal textwidth=80
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -209,10 +215,11 @@ endif
 if has("win32")
   let Tlist_Ctags_Cmd = $VIMFILES.'/ctags.exe' " location of ctags tool
 else
-  let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+  let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 endif
 set autochdir
 set tags=./tags,tags	",$VIMFILES/doc/tags " used by CTRL-]
+set tags+=set tags+=/home/wuzhw/dev-abstract/network/network-devintf/tags
 map <C-F12> :!ctags -R --fields=+ailS --extra=+q .<CR>
 
 "-----------------------------------------------------------------------------
@@ -315,10 +322,6 @@ let OmniCpp_SelectFirstItem = 0
 let OmniCpp_DefaultNamespaces   = ["std", "_GLIBCXX_STD"]
 highlight Pmenu guibg=darkgrey guifg=black
 highlight PmenuSel guibg=lightgrey guifg=black
-" set ofu=syntaxcomplete
-" autocmd FileType python　set
-" omnifunc=pythoncomplete
-" autocmd FileType python runtime! autoload/pythoncomplete.vim
 
 "-----------------------------------------------------------------------------
 " plugin - python related
@@ -328,14 +331,18 @@ if has("win32")
 else
   let PYTHON_BIN_PATH = '/usr/bin/python'
 endif
-au FileType python set complete+=k$VIMFILES/dict/pydiction isk+=.,(
 let g:pydiction_location='~/.vim/tools/complete-dict'
 let g:pydiction_menu_height=20
 au FileType python source $VIMFILES/plugin/python.vim
+" omnifunc=pythoncomplete
+" set ofu=syntaxcomplete
+" autocmd FileType python　set
+" autocmd FileType python runtime! autoload/pythoncomplete.vim
+" autocmd FileType python setlocal foldmethod=indent
+" au FileType python set complete+=k$VIMFILES/dict/pydiction isk+=.,(
 " au FileType python pyfile $VIMFILES/plugin/pyCallTips.py
-autocmd FileType python setlocal foldmethod=indent
 " unfold all codes defaultly
-set foldlevel=99
+" set foldlevel=99
 
 
 " quickfix setting
@@ -368,10 +375,11 @@ let FAV_File = $VIMDATA.'/_vim_fav_files'  " which file to save favorite items
 "-----------------------------------------------------------------------------
 " plugin - minibufexpl.vim
 "-----------------------------------------------------------------------------
-let g:miniBufExplTabWrap = 1               " make tabs show complete (no broken on two lines)
-let g:miniBufExplModSelTarget = 1
-
-
+" let g:miniBufExplTabWrap=1               " make tabs show complete (no broken on two lines)
+" let g:miniBufExplModSelTarget=1
+" let g:miniBufExplMapWindowNavVim=1
+" let g:miniBufExplMapWindowNavArrows=1
+" let g:miniBufExplMapCTabSwitchBufs=1
 
 "-----------------------------------------------------------------------------
 " plugin - matchit.vim
@@ -422,19 +430,19 @@ inoremap <buffer>  ,,, ><Esc>db:call MakeElement()<enter>@w
 "-----------------------------------------------------------------------------
 " mappings
 "-----------------------------------------------------------------------------
-map <right> <ESC>:MBEbn<RETURN>
-                                           " -> switches buffers
+map <right> <ESC>:MBEbn<RETURN>				
+										" -> switches buffers
 map <left>  <ESC>:MBEbp<RETURN>
-                                           " <- switches buffers
+                                        " <- switches buffers
 map <up>    <ESC>:Sex<RETURN><ESC><C-W><C-W>
-                                           " up arrow to bring up a file explorer
+                                        " up arrow to bring up a file explorer
 map <down>  <ESC>:Tlist<RETURN>
-                                           " down arrow to bring up the taglist
+                                        " down arrow to bring up the taglist
 map <A-i> i <ESC>r
-                                           " Alt-i inserts a single char, and back to normal
+                                        " Alt-i inserts a single char, and back to normal
 map <F3>    <ESC>ggVG:call SuperRetab()<left>
 map <F4>    ggVGg?
-                                           " Rot13 encode the current file
+                                        " Rot13 encode the current file
 
 "noremap <silent> <C-F11> :cal VimCommanderToggle()<CR>
 
@@ -470,12 +478,8 @@ if has('multi_byte_ime')
   hi CursorIM guifg=NONE guibg=Blue
 endif
 
-let g:winManagerWidth   = 35
-let g:winManagerWindowLayout = 'TodoList'
+" let g:winManagerWidth   = 35
+" let g:winManagerWindowLayout = 'TodoList'
+
 
 let g:tskelDir = $VIMFILES."/skeletons"
-
-let g:miniBufExplMapWindowNavVim=1
-let g:miniBufExplMapWindowNavArrows=1
-let g:miniBufExplMapCTabSwitchBufs=1
-let g:miniBufExplModSelTarget=1

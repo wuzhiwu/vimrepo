@@ -31,27 +31,22 @@
 "   "make".
 "
 "*******************************************************************************
-
-
 " Change this variable to reflect the path of the Python executable on your
 " system.  If your system knows how to find Python then setting this variable
 " to 'python' should be enough.  Otherwise, type the complete path to the
 " executable.
 let s:PathToExecutable = 'c:\py21\python.exe'
-
 " Used to designate the Python script to run when pressing "F12" or typing the
 " Ex command "Rs"
 let s:mainfile = ""
-
 let s:flag = 0
 let @a = ""
-
 " Map keys to function calls
 if !hasmapto('<Plug>RunScript')
   nmap <unique> <silent> <F12> <Plug>ExecuteScript
 endif
 if !hasmapto('<Plug>SetMainScript')
-  nmap <unique> <silent> <F11> <Plug>SetMainScript
+  nmap <unique> <silent> <C-F11> <Plug>SetMainScript
 endif
 if !hasmapto('<Plug>ClearMainScript')
   nmap <unique> <silent> <S-F11> <Plug>ClearMainScript
